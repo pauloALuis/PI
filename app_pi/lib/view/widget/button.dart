@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:app_pi/view/HomePage.dart';
+import 'package:app_pi/controller/SignupController.dart';
+import 'package:app_pi/model/ClientModel.dart';
 
 class ButtonLogin extends StatefulWidget {
+  GlobalKey<FormState> form;
+  ButtonLogin({this.form});
+
   @override
   _ButtonLoginState createState() => _ButtonLoginState();
 }
 
 class _ButtonLoginState extends State<ButtonLogin> {
-  final _formKey = GlobalKey<FormState>();
-
+  GlobalKey<FormState> _formKey;
   final _controller = new SignupController();
-
-  final _model = new UserModel1();
+  final _model = new ClientModel();
 
   @override
   Widget build(BuildContext context) {
+    val();
     return Padding(
       padding: const EdgeInsets.only(top: 40, right: 50, left: 200),
       child: Container(
@@ -43,7 +47,11 @@ class _ButtonLoginState extends State<ButtonLogin> {
   }
 
 
+  void val(){
+    _formKey = this.widget.form;
+//    Toast.show("Toast plugin app"+ valor, context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
 
+  }
   void openNavigatorHomePage(){
     Navigator.push(context,
         MaterialPageRoute(builder: (context) => HomePage()));
@@ -59,17 +67,16 @@ class _ButtonLoginState extends State<ButtonLogin> {
         }
 
         setState(() {
-          _controller.create(_model).then((data){
+          _controller.loginClient(_model).then((data){
             print("token::: "  + data.token);
             //todo:
-
             setState(() { });
           });
 
           openNavigatorHomePage();
 
-
-        },
+        } );
+          },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

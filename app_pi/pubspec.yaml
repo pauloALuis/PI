@@ -30,6 +30,10 @@ dependencies:
   fluttertoast: ^7.1.5
   #A Flutter Toast plugin.
   toast: ^0.1.5
+  #packages http DIO
+  dio: ^3.0.9
+  http: ^0.12.2
+  shared_preferences: ^0.5.7
 
 
   # The following adds the Cupertino Icons font to your application.
