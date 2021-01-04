@@ -1,0 +1,24 @@
+
+Endpoint registar
+https://projecthub.gotdns.ch:9191/api/register/
+{​​​​​​​​
+"username":"hugo5",
+"password":"12345",
+"email":"1234@email.com",
+"first_name":"Hugo",
+"last_name":"Silva",
+"customer_type":"1",
+"person_id":"3",
+"nif":"125456960",
+"phone":"986754651",
+"funds":"10"
+}​​​​​​​​
+
+
+Endpoint login :
+https://projecthub.gotdns.ch:9191/api/login/
+
+{
+ "username": "hugo",
+ "password": "12345"
+}

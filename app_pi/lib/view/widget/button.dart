@@ -7,6 +7,12 @@ class ButtonLogin extends StatefulWidget {
 }
 
 class _ButtonLoginState extends State<ButtonLogin> {
+  final _formKey = GlobalKey<FormState>();
+
+  final _controller = new SignupController();
+
+  final _model = new UserModel1();
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,31 +36,58 @@ class _ButtonLoginState extends State<ButtonLogin> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(30),
         ),
-        child: FlatButton(
-          onPressed: () {
+        child: flatButtonLogin ()
 
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => HomePage()));
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'ENTRAR',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
-              Icon(
-                Icons.arrow_forward,
-                color: Colors.black,
-              ),
-            ],
-          ),
-        ),
       ),
     );
+  }
+
+
+
+  void openNavigatorHomePage(){
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => HomePage()));
+  }
+
+
+  FlatButton flatButtonLogin (){
+      return new  FlatButton(
+        onPressed: () {
+
+        if(_formKey.currentState.validate()){
+          _formKey.currentState.save();
+        }
+
+        setState(() {
+          _controller.create(_model).then((data){
+            print("token::: "  + data.token);
+            //todo:
+
+            setState(() { });
+          });
+
+          openNavigatorHomePage();
+
+
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              'ENTRAR',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 14,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            Icon(
+              Icons.arrow_forward,
+              color: Colors.black,
+            ),
+          ],
+        ),
+      );
+
   }
 }
