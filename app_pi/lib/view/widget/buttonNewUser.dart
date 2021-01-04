@@ -35,7 +35,7 @@ class _ButtonNewUserState extends State<ButtonNewUser> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                'OK',
+                'CRIAR CONTA',
                 style: TextStyle(
                   color: Colors.lightBlueAccent,
                   fontSize: 14,
@@ -52,4 +52,9 @@ class _ButtonNewUserState extends State<ButtonNewUser> {
       ),
     );
   }
+
+
+
+
+
 }

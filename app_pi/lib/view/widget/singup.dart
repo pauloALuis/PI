@@ -13,7 +13,7 @@ class _SingUpState extends State<SingUp> {
       child: RotatedBox(
           quarterTurns: -1,
           child: Text(
-            'CRIAR CONTA',
+            '\t\t\t\t\t\t IPBEJA \n CRIAR CONTA',
             style: TextStyle(
               color: Colors.white,
               fontSize: 38,

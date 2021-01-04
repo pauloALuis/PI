@@ -5,7 +5,7 @@ class UserOld extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 30, left: 30),
+      padding: const EdgeInsets.only(top: 30, left: 30 ,bottom: 10),
       child: Container(
         alignment: Alignment.topRight,
         //color: Colors.red,
@@ -13,12 +13,12 @@ class UserOld extends StatelessWidget {
         child: Row(
           children: <Widget>[
             Text(
-              'Já nos encontramos antes?',
+              'Já nos encontramos antes? ',
               style: TextStyle(
                 fontSize: 17,
-                fontWeight: FontWeight.w700,
+//                fontWeight: FontWeight.w700,
 
-                color: Colors.white70,
+                color: Colors.white,
               ),
             ),
             FlatButton(
@@ -27,20 +27,51 @@ class UserOld extends StatelessWidget {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => LoginPage()));
               },
-              child: Text(
-                ' Efetuar LOGIN',
-                style: TextStyle(
-                  fontSize: 17,
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-
-                ),
-                textAlign: TextAlign.right,
-              ),
+              child:  richText()
             ),
           ],
         ),
       ),
     );
   }
+
+
+
+  RichText   richText(){
+    /*Text(
+      'EFETUAR LOGIN',
+      style: TextStyle(
+        fontSize: 17,
+        color: Colors.white,
+        fontWeight: FontWeight.w700,
+
+      ),
+      textAlign: TextAlign.right,
+    ),*/
+
+
+  return RichText(
+      text: TextSpan(
+      children: [
+      TextSpan(
+      text: "",
+      ),
+      WidgetSpan(
+      child: Icon(Icons.arrow_back, size: 20, color: Colors.white,),
+      ),
+      TextSpan(
+      text: "EFETUAR LOGIN",
+        style: TextStyle(
+          fontSize: 17,
+          color: Colors.white,
+          fontWeight: FontWeight.w700,)
+      ),
+      ],
+      ),
+  );
+}
+
+
+
+
 }
