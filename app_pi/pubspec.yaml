@@ -23,6 +23,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  custom_navigation_bar: ^0.3.0
+  #use Menu
+  navigation_dot_bar: ^0.1.3
+  #this toast and fluttertoast library supports two kinds of toast messages one which requires BuildContext other with No BuildContext
+  fluttertoast: ^7.1.5
+  #A Flutter Toast plugin.
+  toast: ^0.1.5
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -43,6 +50,11 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+  - imagens/menu_cliente.png
+  - imagens/menu_contato.png
+  - imagens/menu_empresa.png
+  - imagens/menu_servico.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
