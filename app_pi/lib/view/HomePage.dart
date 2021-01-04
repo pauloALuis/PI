@@ -16,9 +16,9 @@ class _HomePageState extends State<HomePage> {
       resizeToAvoidBottomInset: false,
       body: SingleChildScrollView( child: Container(padding:EdgeInsets.all(8), child: Column(crossAxisAlignment:CrossAxisAlignment.start , children:
       [
-          _cardText('Almoço 12:00 - 14:00', context),
+          _cardText('  Almoço 12:00h  -  14:00h', context),
            containerList(),
-          _cardText('Jantar 19:30 - 20:40', context),
+          _cardText1('  Jantar 19:30h  -  20:40h', context),
 
           containerList(),
       ],
@@ -104,6 +104,31 @@ double yourWidth = width * 0.98;
 }
 
 
+Card _cardText1([String tipoRefeicao, BuildContext contexts])
+{
+  double width = MediaQuery.of(contexts).size.width;
+
+  double yourWidth = width * 0.98;
+
+  return Card(
+    //color: Colors.lightGreen[100],Colors.lightGreen[800]
+    //color: Colors.lightGreen,
+    color: Colors.lightGreen[100],
+
+//    clipBehavior: Clip.antiAlias,
+    child: Container(     width: yourWidth, height: 26.3,
+      child: SingleChildScrollView(    // new line
+          child:  _text(tipoRefeicao)
+//        Column( mainAxisAlignment: MainAxisAlignment.center,
+//      children: [
+//      Padding(
+//        padding: const EdgeInsets.all(5.0),
+//        child: ,),
+//      ],
+//    ),
+      ),),
+  );
+}
 
 
 Card _cardLis([String tipoRefeicao]){
