@@ -4,11 +4,9 @@ import 'package:app_pi/model/UserViewModel.dart';
 import 'package:app_pi/view/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pi/view/widget/first.dart';
-import 'package:app_pi/view/widget/password.dart';
 import 'package:app_pi/view/widget/verticalText.dart';
 import 'package:flutter/services.dart';
 
-import 'widget/inputEmail.dart';
 import 'widget/textLogin.dart';
 
 
@@ -96,18 +94,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
-  InputEmail(){
-
-    return  Padding(
-      padding: const EdgeInsets.only(top: 10, left: 50, right: 50),
-      child: Container(
-          height: 50,
-          width: MediaQuery.of(context).size.width,
-          child: _textField()
-      ),
-    );
-  }
-
 
 
 
@@ -157,7 +143,19 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
-  TextFormField _textField(){
+  InputEmail(){
+
+    return  Padding(
+      padding: const EdgeInsets.only(top: 10, left: 50, right: 50),
+      child: Container(
+          height: 60,
+          width: MediaQuery.of(context).size.width,
+          child: _textUserNameField()
+      ),
+    );
+  }
+
+  TextFormField _textUserNameField(){
 
     return new TextFormField(
 //      maxLength: 10,
@@ -185,16 +183,16 @@ class _LoginPageState extends State<LoginPage> {
           hoverColor: Colors.black,
 //        helperText: 'User Name2',//texto por baixo do textField
           prefixIcon: Icon(Icons.person, color: Colors.white,),
-          suffixText: 'User name',
+//          suffixText: 'Nome Utilizador',
           suffixStyle: new TextStyle(fontSize: 12),
-          hintText: 'user name',
+//          hintText: 'Nome Utilizador',
           hintStyle: new TextStyle(color: Colors.black45),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
             borderSide: BorderSide(color: Colors.yellowAccent),
 
           ),
-          labelText: 'User name',
+          labelText: 'Nome utilizador',
 
 //          labelStyle: TextStyle(
 //              color: Colors.amber
@@ -208,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
   Padding passwordInput() {
 
     return new Padding(
-        padding: const EdgeInsets.only(top: 20, left: 50, right: 50),
+        padding: const EdgeInsets.only(top: 10, left: 50, right: 50),
         child: Container(
             height: 60,
             width: MediaQuery.of(context).size.width,
