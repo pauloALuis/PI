@@ -5,11 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         
+        
         {
             "name": "app_pi",
             "cwd": "app_pi",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "flutterMode": "debug"
         }
     ]
 }
