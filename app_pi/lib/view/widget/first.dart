@@ -20,8 +20,10 @@ class _FirstTimeState extends State<FirstTime> {
             Text(
               'É sua primeira vez?',
               style: TextStyle(
-                fontSize: 15,
+                fontSize: 18.1,
                 color: Colors.white70,
+                fontWeight: FontWeight.w700,
+
               ),
             ),
             FlatButton(
@@ -33,8 +35,10 @@ class _FirstTimeState extends State<FirstTime> {
               child: Text(
                 ' CRIAR CONTA',
                 style: TextStyle(
-                  fontSize: 19,
+                  fontSize: 21.1,
                   color: Colors.white,
+                  fontWeight: FontWeight.w700,
+
                 ),
                 textAlign: TextAlign.right,
               ),

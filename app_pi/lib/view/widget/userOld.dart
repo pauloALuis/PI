@@ -15,7 +15,9 @@ class UserOld extends StatelessWidget {
             Text(
               'Já nos encontramos antes?',
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 17,
+                fontWeight: FontWeight.w700,
+
                 color: Colors.white70,
               ),
             ),
@@ -26,10 +28,12 @@ class UserOld extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => LoginPage()));
               },
               child: Text(
-                'Efetuar LOGIN',
+                ' Efetuar LOGIN',
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 17,
                   color: Colors.white,
+                  fontWeight: FontWeight.w700,
+
                 ),
                 textAlign: TextAlign.right,
               ),

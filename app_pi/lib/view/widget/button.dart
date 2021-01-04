@@ -13,7 +13,7 @@ class _ButtonLoginState extends State<ButtonLogin> {
       padding: const EdgeInsets.only(top: 40, right: 50, left: 200),
       child: Container(
         alignment: Alignment.bottomRight,
-        height: 50,
+        height: 40,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           boxShadow: [
