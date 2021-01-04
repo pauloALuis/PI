@@ -1,24 +1,25 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:app_pi/model/ClientModel.dart';
+import 'package:app_pi/model/UserViewModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountRepository{
 
-  signin({String username, String password, String email}) async{
+  signin(UserViewModel model) async{
     final link = 'https://projecthub.gotdns.ch:9191/api/login/';
     final link1 = 'http://127.0.0.1:800/login';
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map data = {
-      "username": username,
-      "password": password,
+      "username": model.username,
+      "password": model.passwords,
     };
 
 
     Map data1 = {
-      "email": email,
-      "password": password,
+      "email": model.email,
+      "password": model.passwords,
     };
 
     var response = await http.post( link1, body: data1 );
@@ -32,6 +33,7 @@ class AccountRepository{
         jsonData = json.decode(response.body);
         prefs.setString("token", jsonData['token']);
 
+        print(response.body);
     }
 
 

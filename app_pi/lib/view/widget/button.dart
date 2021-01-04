@@ -67,13 +67,8 @@ class _ButtonLoginState extends State<ButtonLogin> {
         }
 
         setState(() {
-          _controller.loginClient(_model).then((data){
-            print("token::: "  + data.token);
-            //todo:
-            setState(() { });
-          });
+              print("testeeeee");
 
-          openNavigatorHomePage();
 
         } );
           },

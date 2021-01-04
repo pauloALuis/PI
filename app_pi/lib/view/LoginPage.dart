@@ -1,10 +1,12 @@
 import 'package:app_pi/controller/SignupController.dart';
 import 'package:app_pi/model/ClientModel.dart';
+import 'package:app_pi/model/UserViewModel.dart';
 import 'package:app_pi/view/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pi/view/widget/first.dart';
 import 'package:app_pi/view/widget/password.dart';
 import 'package:app_pi/view/widget/verticalText.dart';
+import 'package:flutter/services.dart';
 
 import 'widget/inputEmail.dart';
 import 'widget/textLogin.dart';
@@ -19,8 +21,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   final _controller = new SignupController();
-  final _model = new ClientModel();
+  final _model = new UserViewModel();
   bool isLoading = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                   TextLogin(),
                 ]),
                 InputEmail(),
-                PasswordInput(),
+                passwordInput(),
                 _model.flagBussy ? Center(child: Container(child: CircularProgressIndicator(backgroundColor: Colors.yellow,),),):
                 paddingButtonLogin(),
 //                ButtonLogin(form: _formKey),
@@ -93,6 +96,23 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
+  InputEmail(){
+
+    return  Padding(
+      padding: const EdgeInsets.only(top: 10, left: 50, right: 50),
+      child: Container(
+          height: 50,
+          width: MediaQuery.of(context).size.width,
+          child: _textField()
+      ),
+    );
+  }
+
+
+
+
+
+
   FlatButton flatButtonLogin (){
     return new  FlatButton(
       onPressed: () {
@@ -135,6 +155,114 @@ class _LoginPageState extends State<LoginPage> {
     );
 
   }
+
+
+  TextFormField _textField(){
+
+    return new TextFormField(
+//      maxLength: 10,
+        inputFormatters: [LengthLimitingTextInputFormatter(10),],
+        validator: (value){
+          if(value.isEmpty || value.length < 4){
+            return 'field Email cannot be null and < 4';
+          }
+          return null;
+        },
+        onSaved: (val){
+          _model.username = val;
+        },
+        maxLines: 1,
+
+        autofocus: true,
+        textAlign: TextAlign.left,
+        style: new TextStyle(color: Colors.black, fontSize: 20.0),
+        cursorColor: Colors.black,
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(
+
+          filled: false,
+          fillColor: Colors.white,
+          hoverColor: Colors.black,
+//        helperText: 'User Name2',//texto por baixo do textField
+          prefixIcon: Icon(Icons.person, color: Colors.white,),
+          suffixText: 'User name',
+          suffixStyle: new TextStyle(fontSize: 12),
+          hintText: 'user name',
+          hintStyle: new TextStyle(color: Colors.black45),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(color: Colors.yellowAccent),
+
+          ),
+          labelText: 'User name',
+
+//          labelStyle: TextStyle(
+//              color: Colors.amber
+//          ),
+//        focusColor: Colors.amber,
+
+        )
+    );
+  }
+
+  Padding passwordInput() {
+
+    return new Padding(
+        padding: const EdgeInsets.only(top: 20, left: 50, right: 50),
+        child: Container(
+            height: 60,
+            width: MediaQuery.of(context).size.width,
+            child: _textFieldPass() )
+    );
+  }
+
+  TextFormField _textFieldPass(){
+
+    return new TextFormField(
+
+
+        validator: (value){
+          if(value.isEmpty || value.length < 4){
+            return 'field Email cannot be null and < 4';
+          }
+          return null;
+        },
+        onSaved: (val){
+          _model.passwords = val;
+        },
+        inputFormatters: [LengthLimitingTextInputFormatter(10),],
+
+        maxLines: 1,
+        obscureText: true,
+        autofocus: true,
+        textAlign: TextAlign.left,
+        style: new TextStyle(color: Colors.black, fontSize: 20.0),
+        cursorColor: Colors.black,
+        keyboardType: TextInputType.visiblePassword,
+        decoration: InputDecoration(
+
+          filled: false,
+          fillColor: Colors.white,
+          hoverColor: Colors.black,
+//        helperText: 'User Name2',//texto por baixo do textField
+          prefixIcon: Icon(Icons.lock, color: Colors.white,),
+//        suffixText: 'User name',
+          suffixStyle: new TextStyle(fontSize: 12),
+//        hintText: 'user name',
+          hintStyle: new TextStyle(color: Colors.black45),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(color: Colors.yellowAccent),
+          ),
+          labelText: 'Password',
+          focusColor: Colors.amber,
+
+        )
+    );
+  }
+
 }
+
+
 
 
