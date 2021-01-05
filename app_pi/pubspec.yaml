@@ -21,6 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  #adicionei line 25
+ stripe_payment: ^1.0.6
   flutter:
     sdk: flutter
   custom_navigation_bar: ^0.3.0
