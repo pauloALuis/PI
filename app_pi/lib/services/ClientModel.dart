@@ -8,6 +8,8 @@ class ClientModel {
   int _nif;
   int _phone;
   String _funds;
+  String _refresh;
+  String _access;
 
   ClientModel(
       {String username,
@@ -15,6 +17,8 @@ class ClientModel {
         String firstName,
         String lastName,
         String customerType,
+        String refresh,
+        String access,
         int personId,
         int nif,
         int phone,
@@ -28,6 +32,8 @@ class ClientModel {
     this._nif = nif;
     this._phone = phone;
     this._funds = funds;
+    this._access = access;
+    this._refresh = refresh;
   }
 
   String get username => _username;
@@ -46,8 +52,15 @@ class ClientModel {
   set nif(int nif) => _nif = nif;
   int get phone => _phone;
   set phone(int phone) => _phone = phone;
-  String get funds => _funds;
+  String get refresh => _refresh;
+  set refresh(String refresh) => _refresh = refresh;
+
+  String get funds => funds;
   set funds(String funds) => _funds = funds;
+
+  String get access => _access;
+  set access(String access) => _access = access;
+
 
   ClientModel.fromJson(Map<String, dynamic> json) {
     _username = json['username'];
@@ -59,6 +72,8 @@ class ClientModel {
     _nif = json['nif'];
     _phone = json['phone'];
     _funds = json['funds'];
+    _refresh = json['refresh'];
+    _access = json['access'];
   }
 
   Map<String, dynamic> toJson() {
@@ -72,6 +87,8 @@ class ClientModel {
     data['nif'] = this._nif;
     data['phone'] = this._phone;
     data['funds'] = this._funds;
+    data['access'] = this._access;
+    data['refresh'] = this._refresh;
     return data;
   }
 }

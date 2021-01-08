@@ -61,9 +61,9 @@ TextField _textField(){
         hoverColor: Colors.black,
 //        helperText: 'User Name2',//texto por baixo do textField
         prefixIcon: Icon(Icons.person, color: Colors.white,),
-        suffixText: 'User name',
+        suffixText: 'User hhname',
         suffixStyle: new TextStyle(fontSize: 12),
-        hintText: 'user name',
+        hintText: 'user w',
         hintStyle: new TextStyle(color: Colors.black45),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),

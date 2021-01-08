@@ -1,6 +1,6 @@
 import 'package:app_pi/controller/SignupController.dart';
-import 'package:app_pi/model/ClientModel.dart';
-import 'package:app_pi/model/UserViewModel.dart';
+import 'package:app_pi/services/ClientModel.dart';
+import 'package:app_pi/services/UserViewModel.dart';
 import 'package:app_pi/view/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pi/view/widget/first.dart';
@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
                   VerticalText(),
                   TextLogin(),
                 ]),
-                InputEmail(),
+                InputUserName(),
                 passwordInput(),
                 _model.flagBussy ? Center(child: Container(child: CircularProgressIndicator(backgroundColor: Colors.yellow,),),):
                 paddingButtonLogin(),
@@ -144,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
-  InputEmail(){
+  InputUserName(){
 
     return  Padding(
       padding: const EdgeInsets.only(top: 10, left: 50, right: 50),

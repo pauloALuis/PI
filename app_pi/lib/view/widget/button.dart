@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app_pi/view/HomePage.dart';
 import 'package:app_pi/controller/SignupController.dart';
-import 'package:app_pi/model/ClientModel.dart';
+import 'package:app_pi/services/ClientModel.dart';
 
 class ButtonLogin extends StatefulWidget {
   GlobalKey<FormState> form;

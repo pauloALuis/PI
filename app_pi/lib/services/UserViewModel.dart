@@ -10,5 +10,7 @@ class UserViewModel{
     return 'SignupViewModel{nome: $nome, nome: $username, email: $email, passwords: $passwords}';
   }
 
+  /*https://github.com/shubie/flutter-thursday-login-registration/blob/master/lib/pages/login.dart*/
+
 
 }

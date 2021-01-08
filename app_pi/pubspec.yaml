@@ -32,8 +32,11 @@ dependencies:
   #packages http DIO
   dio: ^3.0.9
   http: ^0.12.2
+  #pachage shared_preferences for import
   shared_preferences: ^0.5.7
-
+  #pachage/ This plugin stores Shared Preferences as encrypted values on device storag for import
+  encrypted_shared_preferences: ^1.0.7
+  #pachage shared_preferences for import
   custom_navigation_bar: ^0.3.0
 
   # The following adds the Cupertino Icons font to your application.

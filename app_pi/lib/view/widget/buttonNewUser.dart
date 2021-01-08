@@ -29,7 +29,7 @@ class _ButtonNewUserState extends State<ButtonNewUser> {
             color: Colors.white, borderRadius: BorderRadius.circular(30)),
         child: FlatButton(
           onPressed: (){
-            Navigator.pop(context);
+          Navigator.pop(context);
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -52,6 +52,8 @@ class _ButtonNewUserState extends State<ButtonNewUser> {
       ),
     );
   }
+
+
 
 
 

@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
-import 'package:app_pi/model/ClientModel.dart';
-import 'package:app_pi/model/UserViewModel.dart';
+import 'package:app_pi/services/ClientModel.dart';
+import 'package:app_pi/services/UserViewModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,7 +10,7 @@ class AccountRepository{
   final String urlSignup = 'https://projecthub.gotdns.ch:9191/api/register/';
   final String urlLogin = 'https://projecthub.gotdns.ch:9191/api/login/';
 
-
+/*
   signin(UserViewModel model) async{
     final link1 = 'http://127.0.0.1:800/login';
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -91,19 +91,8 @@ class AccountRepository{
     return ClientModel.fromJson(responseJson);
 
 
-    /*return new ClientModel(
-        username: "user1",
-        firstName: 'teste',
-        lastName: "Silva",
-        password: "12345",
-        email: "1234@email.com",
-        customerType: "1",
-        personId: "3",
-        nif: "125456960",
-        phone: "986754651",
-        funds: "10.0"
-    );*/
 
 
-  }
+
+  }*/
 }
