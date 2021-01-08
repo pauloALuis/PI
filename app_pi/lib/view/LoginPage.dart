@@ -110,7 +110,8 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           isLoading = true;
           _controller.loginClient(_model).then((data){
-            print("token::: "  + data.token);
+//            data.token
+            print("token::: "  );
             //todo:
             setState(() { });
           });
