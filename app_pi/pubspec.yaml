@@ -21,11 +21,8 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
-  #adicionei line 25
- stripe_payment: ^1.0.6
   flutter:
     sdk: flutter
-  custom_navigation_bar: ^0.3.0
   #use Menu
   navigation_dot_bar: ^0.1.3
   #this toast and fluttertoast library supports two kinds of toast messages one which requires BuildContext other with No BuildContext
@@ -37,6 +34,7 @@ dependencies:
   http: ^0.12.2
   shared_preferences: ^0.5.7
 
+  custom_navigation_bar: ^0.3.0
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
