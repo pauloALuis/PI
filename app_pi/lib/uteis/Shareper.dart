@@ -1,30 +1,16 @@
 import 'package:encrypted_shared_preferences/encrypted_shared_preferences.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Encrypted Shared Preferences Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: MyHomePage(title: 'Encrypted Shared Preferences Demo Page'),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+class EcraTeste extends StatefulWidget {
+  EcraTeste({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _EcraTesteState createState() => _EcraTesteState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _EcraTesteState extends State<EcraTeste> {
   final EncryptedSharedPreferences encryptedSharedPreferences =
   EncryptedSharedPreferences();
   final _formKey = GlobalKey<FormState>();

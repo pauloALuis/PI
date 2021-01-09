@@ -89,7 +89,7 @@ inputName(){
         width: MediaQuery.of(context).size.width,
         child: TextFormField(
             validator: Useful.validateName,
-            controller: _controllerFullName,
+            controller: this._controllerFullName,
 
 
             //      maxLength: 10,
@@ -191,7 +191,7 @@ TextFormField _textFieldPass(){
 
 
         validator: Useful.validateName,
-        controller: _controllerPass,
+        controller: this._controllerPass,
 
         inputFormatters: [LengthLimitingTextInputFormatter(10),],
 
@@ -233,7 +233,7 @@ TextFormField _textFieldPass(){
         width: MediaQuery.of(context).size.width,
         child: TextFormField(
             validator: Useful.validateNIF,
-            controller: _controllerNIF,
+            controller: this._controllerNIF,
 
             //      maxLength: 10,
             inputFormatters: [LengthLimitingTextInputFormatter(10),],
@@ -418,7 +418,7 @@ TextFormField _textFieldPass(){
           color: Colors.white, borderRadius: BorderRadius.circular(30)),
       child: FlatButton(
         onPressed: (){
-          _onClicke();
+          _onClicke(context);
 
 //          Navigator.pop(context);
         },
@@ -444,7 +444,7 @@ TextFormField _textFieldPass(){
   );
 }
 
-  void _onClicke() {
+  void _onClicke([BuildContext context]) {
 
     if(_formKey.currentState.validate()){
       _formKey.currentState.save();

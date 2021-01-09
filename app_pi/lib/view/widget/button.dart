@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:app_pi/view/HomePage.dart';
-import 'package:app_pi/controller/SignupController.dart';
+import 'package:app_pi/controller/UserController.dart';
 import 'package:app_pi/services/ClientModel.dart';
 
 class ButtonLogin extends StatefulWidget {
@@ -13,7 +13,7 @@ class ButtonLogin extends StatefulWidget {
 
 class _ButtonLoginState extends State<ButtonLogin> {
   GlobalKey<FormState> _formKey;
-  final _controller = new SignupController();
+  final _controller = new UserController();
   final _model = new ClientModel();
 
   @override

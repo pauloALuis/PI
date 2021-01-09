@@ -1,3 +1,4 @@
+import 'package:app_pi/uteis/Useful.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:navigation_dot_bar/navigation_dot_bar.dart';
@@ -33,7 +34,7 @@ class _HomePageState extends State<HomePage> {
               BottomNavigationDotBarItem( icon: Icons.person, onTap: () { /* Cualquier funcion - [abrir nueva venta] */ }),
 
             ]
-      ),          backgroundColor: Colors.lightGreen[100],
+      ),          backgroundColor: Useful.colorBackGround,
 
     );
   }

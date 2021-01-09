@@ -1,6 +1,7 @@
-import 'package:app_pi/controller/SignupController.dart';
+import 'package:app_pi/controller/UserController.dart';
 import 'package:app_pi/services/ClientModel.dart';
 import 'package:app_pi/services/UserViewModel.dart';
+import 'package:app_pi/uteis/Useful.dart';
 import 'package:app_pi/view/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pi/view/widget/first.dart';
@@ -18,8 +19,11 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final _controller = new SignupController();
-  final _model = new UserViewModel();
+  TextEditingController _controllerPass    = new TextEditingController();
+  TextEditingController _controllerUserName      = new TextEditingController();
+
+  final _controller = new UserController();
+  final _dataUserLogin = new UserViewModel();
   bool isLoading = false;
 
 
@@ -33,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
               end: Alignment.bottomLeft,
               colors: [Colors.blueGrey, Colors.lightGreenAccent]),
         ),
-        child:Form(key: _formKey, child: ListView(
+        child:Form(key: this._formKey, child: ListView(
           children: <Widget>[
             Column(
               children: <Widget>[
@@ -41,10 +45,10 @@ class _LoginPageState extends State<LoginPage> {
                   VerticalText(),
                   TextLogin(),
                 ]),
-                InputUserName(),
-                passwordInput(),
-                _model.flagBussy ? Center(child: Container(child: CircularProgressIndicator(backgroundColor: Colors.yellow,),),):
-                paddingButtonLogin(),
+                this.inputUserName(),
+                this.passwordInput(),
+                this._dataUserLogin.flagBussy ? Center(child: Container(child: CircularProgressIndicator(backgroundColor: Colors.yellow,),),):
+                this.paddingButtonLogin(),
 //                ButtonLogin(form: _formKey),
                 FirstTime(),
               ],
@@ -64,7 +68,7 @@ class _LoginPageState extends State<LoginPage> {
       child: Container(
           alignment: Alignment.bottomRight,
           height: 40,
-          width: MediaQuery.of(context).size.width,
+          width: MediaQuery.of(this.context).size.width,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -80,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(30),
           ),
-          child: flatButtonLogin ()
+          child: this.flatButtonLogin ()
 
       ),
     );
@@ -89,13 +93,9 @@ class _LoginPageState extends State<LoginPage> {
 
 
   void openNavigatorHomePage(){
-    Navigator.push(context,
+    Navigator.push(this.context,
         MaterialPageRoute(builder: (context) => HomePage()));
   }
-
-
-
-
 
 
 
@@ -103,23 +103,14 @@ class _LoginPageState extends State<LoginPage> {
     return new  FlatButton(
       onPressed: () {
 
-        if(_formKey.currentState.validate()){
-          _formKey.currentState.save();
-        }
+
 
         setState(() {
-          isLoading = true;
-          _controller.loginClient(_model).then((data){
-//            data.token
-            print("token::: "  );
-            //todo:
-            setState(() { });
+
+          this._onClickLogin();
+
+        //            setState(() { });
           });
-
-//          openNavigatorHomePage();
-
-        } );
-//        openNavigatorHomePage();
 
       },
       child: Row(
@@ -144,14 +135,16 @@ class _LoginPageState extends State<LoginPage> {
   }
 
 
-  InputUserName(){
+
+
+  inputUserName(){
 
     return  Padding(
       padding: const EdgeInsets.only(top: 10, left: 50, right: 50),
       child: Container(
           height: 60,
           width: MediaQuery.of(context).size.width,
-          child: _textUserNameField()
+          child: this._textUserNameField()
       ),
     );
   }
@@ -161,15 +154,9 @@ class _LoginPageState extends State<LoginPage> {
     return new TextFormField(
 //      maxLength: 10,
         inputFormatters: [LengthLimitingTextInputFormatter(10),],
-        validator: (value){
-          if(value.isEmpty || value.length < 4){
-            return 'field Email cannot be null and < 4';
-          }
-          return null;
-        },
-        onSaved: (val){
-          _model.username = val;
-        },
+        controller: _controllerUserName,
+        validator: Useful.validateUsername,
+
         maxLines: 1,
 
         autofocus: true,
@@ -211,7 +198,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Container(
             height: 60,
             width: MediaQuery.of(context).size.width,
-            child: _textFieldPass() )
+            child: this._textFieldPass() )
     );
   }
 
@@ -219,16 +206,8 @@ class _LoginPageState extends State<LoginPage> {
 
     return new TextFormField(
 
-
-        validator: (value){
-          if(value.isEmpty || value.length < 4){
-            return 'field Email cannot be null and < 4';
-          }
-          return null;
-        },
-        onSaved: (val){
-          _model.passwords = val;
-        },
+        validator: Useful.validateName,
+        controller: _controllerPass,
         inputFormatters: [LengthLimitingTextInputFormatter(10),],
 
         maxLines: 1,
@@ -258,6 +237,24 @@ class _LoginPageState extends State<LoginPage> {
 
         )
     );
+  }
+
+
+
+
+
+
+  void _onClickLogin() {
+
+    if(this._formKey.currentState.validate()){
+       this._formKey.currentState.save();
+    }
+    openNavigatorHomePage();
+
+    this._dataUserLogin.passwords = _controllerPass.text;
+    this._dataUserLogin.username = _controllerUserName.text;
+    this.isLoading = true;
+    this._controller.userLogin(this._dataUserLogin);
   }
 
 }
