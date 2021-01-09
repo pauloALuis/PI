@@ -1,4 +1,6 @@
- import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:flutter/material.dart';
+//import 'package:toast/toast.dart';
 
 class Useful{
   //cor do fundo branco com tom verde
@@ -7,6 +9,12 @@ class Useful{
   static final String _urlSignup = 'https://projecthub.gotdns.ch:9191/api/register/';
   // link para Login o utilizador
   static final String _urlLogin = 'https://projecthub.gotdns.ch:9191/api/login/';
+  static final String _urlUser = 'https://projecthub.gotdns.ch:9191/api/customer/';
+
+
+
+
+  static String get urlUser => _urlUser;
 
 
   static get colorBackGround => _colorBackGround;
@@ -50,11 +58,24 @@ class Useful{
       return null;
   }
 
-  String get urlSignup => _urlSignup;
+  static String get urlSignup => _urlSignup;
+
+  static String get urlLogin => _urlLogin;
 
 
 
-  String get urlLogin => _urlLogin;
+  static void toastMessage ({String message :"sem Mensagem"}){
+    Fluttertoast.showToast(
+        msg: message,
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0
+    );
+  }
+
 /*
 set urlSignup(String value) {
     _urlSignup = value;

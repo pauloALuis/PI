@@ -249,12 +249,19 @@ class _LoginPageState extends State<LoginPage> {
     if(this._formKey.currentState.validate()){
        this._formKey.currentState.save();
     }
-    openNavigatorHomePage();
 
     this._dataUserLogin.passwords = _controllerPass.text;
     this._dataUserLogin.username = _controllerUserName.text;
     this.isLoading = true;
-    this._controller.userLogin(this._dataUserLogin);
+    var resp = this._controller.userLogin(this._dataUserLogin);
+
+    Useful.toastMessage(message: resp.toString() );
+
+    if( resp != null)
+    {
+      openNavigatorHomePage();
+    }
+
   }
 
 }

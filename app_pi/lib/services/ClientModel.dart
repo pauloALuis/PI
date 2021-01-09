@@ -91,4 +91,11 @@ class ClientModel {
     data['refresh'] = this._refresh;
     return data;
   }
+
+  @override
+  String toString() {
+    return 'ClientModel{_username: $_username, _email: $_email, _firstName: $_firstName, _lastName: $_lastName, _customerType: $_customerType, _personId: $_personId, _nif: $_nif, _phone: $_phone, _funds: $_funds, _refresh: $_refresh, _access: $_access}';
+  }
+
+
 }
