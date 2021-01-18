@@ -1,6 +1,7 @@
 import 'package:app_pi/services/ClientModel.dart';
+import 'package:app_pi/services/UserPreferences.dart';
 import 'package:app_pi/services/UserViewModel.dart';
-import 'package:app_pi/uteis/Useful.dart';
+import 'package:app_pi/util/Useful.dart';
 import 'dart:convert' as convert;
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -11,6 +12,9 @@ class UserAPI{
   "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjA4MDM1MDUzLCJqdGkiOiIxNWZkNDI4YmQ2YzU0ODIxYmFhYmUzNTI3NDU2ZjlmZiIsInVzZXJfaWQiOjN9.dA8ld1iYTifRO5IZ14O8HYxpdMyIgBFEP1zedmEn3pg",
     "Content-Type": "application/json"};
  final _client = http.Client();
+
+// final UserPreferences _userPreferences = new UserPreferences();
+  UserPreferences _modelUserPreferences = new UserPreferences();
 
 
 
@@ -29,18 +33,15 @@ class UserAPI{
       if (response.statusCode == 200) {
 
         Map mapResponse = convert.json.decode(response.body);
-
         Future<ClientModel> userModel;
 
-        userModel =  this._fetchUser(mapResponse['access']);
+        userModel = this._fetchUser(mapResponse['access']);
+        this._modelUserPreferences.saveUser(access: mapResponse['access'], refresh: mapResponse['refresh'] );
 
-       return  userModel;
+        return this._fetchUser(mapResponse['access']);
 
       }
       else{
-
-
-
         throw Exception('Falha no acesso!');
       }
 
@@ -60,6 +61,7 @@ class UserAPI{
 
       if (response.statusCode == 200) {
         print('Response user: ${convert.jsonDecode(response.body)}');
+        UserViewModel.flagBussy1 = true;
 
         return ClientModel.fromJson(convert.jsonDecode(response.body));
       }

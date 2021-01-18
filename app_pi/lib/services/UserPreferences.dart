@@ -7,20 +7,21 @@ class UserPreferences {
   final EncryptedSharedPreferences prefs = EncryptedSharedPreferences();
 
 
-  Future<bool> saveUser(ClientModel user) async {
+  bool saveUser({String access,int phone,String customerType, String refresh, String firstName,String lastName,String username, })  {
 
     try{
 
 
-      prefs.setString("username", user.username);
-      prefs.setString("name", user.lastName + " " + user.firstName);
-      prefs.setString("access", user.access);
-      prefs.setString("phone", user.phone.toString());
-      prefs.setString("customerType", user.customerType);
-      prefs.setString("refresh", user.refresh);
+      prefs.setString("username", username);
+      prefs.setString("name",lastName + " " + firstName);
+      prefs.setString("access",  access);
+      prefs.setString("phone", phone.toString());
+      prefs.setString("customerType", customerType);
+      prefs.setString("refresh",  refresh);
 
     }
     on IntegerDivisionByZeroException {
+      print("erro CShared");
       return false;
 
     }

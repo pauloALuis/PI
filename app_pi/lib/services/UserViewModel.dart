@@ -14,6 +14,8 @@ class UserViewModel {
   int phone;
   String funds;
 
+  static bool flagBussy1= false;
+
   @override
   String toString() {
     return 'UserViewModel{nome: $nome, username: $username, email: $email, '

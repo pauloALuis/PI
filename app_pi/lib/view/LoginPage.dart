@@ -1,7 +1,7 @@
 import 'package:app_pi/controller/UserController.dart';
 import 'package:app_pi/services/ClientModel.dart';
 import 'package:app_pi/services/UserViewModel.dart';
-import 'package:app_pi/uteis/Useful.dart';
+import 'package:app_pi/util/Useful.dart';
 import 'package:app_pi/view/HomePage.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pi/view/widget/first.dart';
@@ -84,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
             color: Colors.white,
             borderRadius: BorderRadius.circular(30),
           ),
-          child: this.flatButtonLogin ()
+          child: _dataUserLogin.flagBussy ? this._containerVerify() : this.flatButtonLogin ()
 
       ),
     );
@@ -244,24 +244,68 @@ class _LoginPageState extends State<LoginPage> {
 
 
 
-  void _onClickLogin() {
+  Future<void> _onClickLogin()  {
 
     if(this._formKey.currentState.validate()){
        this._formKey.currentState.save();
     }
 
-    this._dataUserLogin.passwords = _controllerPass.text;
-    this._dataUserLogin.username = _controllerUserName.text;
-    this.isLoading = true;
-    var resp = this._controller.userLogin(this._dataUserLogin);
 
-    Useful.toastMessage(message: resp.toString() );
 
-    if( resp != null)
-    {
-      openNavigatorHomePage();
-    }
+    try{
 
+      this._dataUserLogin.passwords = _controllerPass.text;
+      this._dataUserLogin.username = _controllerUserName.text;
+      setState(() {
+
+      });
+//        await this._controller.userLogin(this._dataUserLogin).then((data){
+
+
+          if(true)
+          {
+            openNavigatorHomePage();
+
+          }else{
+            Useful.toastMessage(message:"Nome de Utlizador ou Palavra passe não está Correta" );
+            _dataUserLogin.flagBussy = false;
+
+
+          }           setState(() {
+
+         });
+
+//          _dataUserLogin.flagBussy = false;
+//           });
+//          print("valor ----- : " + data.toString());
+
+          /*  if(UserViewModel.flagBussy1)
+             {
+               openNavigatorHomePage();
+
+             }else{
+               Useful.toastMessage(message:"Nome de Utlizador ou Palavra passe não está Correta" );
+
+             }*/
+
+      //    Useful.toastMessage(message: resp.toString() );
+
+
+
+
+
+
+
+  }catch (err){
+        Useful.toastMessage(message:"errrosss " + err);
+  }
+
+
+  }
+
+  _containerVerify() {
+
+    return new Center(child: Container(child: CircularProgressIndicator(backgroundColor: Colors.black,),),);
   }
 
 }

@@ -1,4 +1,4 @@
-import 'package:app_pi/uteis/Shareper.dart';
+import 'package:app_pi/util/Shareper.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());

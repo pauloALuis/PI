@@ -1,6 +1,6 @@
 
 import 'package:app_pi/services/ClientModel.dart';
-import 'package:app_pi/uteis/Useful.dart';
+import 'package:app_pi/util/Useful.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pi/view/widget/buttonNewUser.dart';
 import 'package:app_pi/view/widget/inputEmail.dart';
