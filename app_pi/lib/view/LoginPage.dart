@@ -1,12 +1,13 @@
-import 'package:app_pi/controller/UserController.dart';
-import 'package:app_pi/services/ClientModel.dart';
-import 'package:app_pi/services/UserViewModel.dart';
+import 'package:app_pi/model/User.dart';
+import 'package:app_pi/Provider/UserProvider.dart';
 import 'package:app_pi/util/Useful.dart';
-import 'package:app_pi/view/HomePage.dart';
+import 'package:app_pi/view/MealsPage.dart';
 import 'package:flutter/material.dart';
 import 'package:app_pi/view/widget/first.dart';
 import 'package:app_pi/view/widget/verticalText.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:flushbar/flushbar.dart';
 
 import 'widget/textLogin.dart';
 
@@ -22,13 +23,102 @@ class _LoginPageState extends State<LoginPage> {
   TextEditingController _controllerPass    = new TextEditingController();
   TextEditingController _controllerUserName      = new TextEditingController();
 
-  final _controller = new UserController();
-  final _dataUserLogin = new UserViewModel();
+
+  String username, pass;
   bool isLoading = false;
 
 
   @override
   Widget build(BuildContext context) {
+    UserProvider auth = Provider.of<UserProvider>(context);
+
+
+    var doLogin = () {
+        final form = _formKey.currentState;
+        if (form.validate()) {
+          form.save();
+          this.pass = _controllerPass.text;
+          this.username = _controllerUserName.text;
+         // Navigator.push(context, MaterialPageRoute(builder: (context)=> MealsPage()));
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> MealsPage()));
+
+         /* auth.fetchUser(username, pass).then((value) {
+            if(value){
+              Navigator.push(context, MaterialPageRoute(builder: (context)=> MealsPage()));
+            }
+            else{
+              Flushbar(
+                title: "Falha acesso",
+                message: auth.getMessage().toString(),
+                duration: Duration(seconds: 8),
+                borderColor: Colors.green,
+                backgroundColor: Useful.erroColors,
+              ).show(context);
+            }
+              //Useful.toastMessage(message: auth.getMessage().toString());
+
+          });*/
+
+
+        }
+
+
+    };
+
+
+
+
+
+    Padding paddingButtonLogin(){
+      return new Padding(
+        padding: const EdgeInsets.only(top: 40, right: 50, left: 200),
+        child: Container(
+            alignment: Alignment.bottomRight,
+            height: 40,
+            width: MediaQuery.of(this.context).size.width,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.blue[300],
+                  blurRadius: 10.0, // has the effect of softening the shadow
+                  spreadRadius: 1.0, // has the effect of extending the shadow
+                  offset: Offset(
+                    5.0, // horizontal, move right 10
+                    5.0, // vertical, move down 10
+                  ),
+                ),
+              ],
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: new  FlatButton(
+
+              onPressed: doLogin,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'ENTRAR',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward,
+                    color: Colors.black,
+                  ),
+                ],
+              ),
+            )
+
+        ),
+      );
+    }
+
+
+
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -47,9 +137,8 @@ class _LoginPageState extends State<LoginPage> {
                 ]),
                 this.inputUserName(),
                 this.passwordInput(),
-                this._dataUserLogin.flagBussy ? Center(child: Container(child: CircularProgressIndicator(backgroundColor: Colors.yellow,),),):
-                this.paddingButtonLogin(),
-//                ButtonLogin(form: _formKey),
+                auth.isLoading() ? CircularProgressIndicator(backgroundColor: Colors.green,) :
+                paddingButtonLogin(),
                 FirstTime(),
               ],
             ),
@@ -58,83 +147,6 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-
-
-
-  Padding paddingButtonLogin(){
-    return new Padding(
-      padding: const EdgeInsets.only(top: 40, right: 50, left: 200),
-      child: Container(
-          alignment: Alignment.bottomRight,
-          height: 40,
-          width: MediaQuery.of(this.context).size.width,
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: Colors.blue[300],
-                blurRadius: 10.0, // has the effect of softening the shadow
-                spreadRadius: 1.0, // has the effect of extending the shadow
-                offset: Offset(
-                  5.0, // horizontal, move right 10
-                  5.0, // vertical, move down 10
-                ),
-              ),
-            ],
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: _dataUserLogin.flagBussy ? this._containerVerify() : this.flatButtonLogin ()
-
-      ),
-    );
-  }
-
-
-
-  void openNavigatorHomePage(){
-    Navigator.push(this.context,
-        MaterialPageRoute(builder: (context) => HomePage()));
-  }
-
-
-
-  FlatButton flatButtonLogin (){
-    return new  FlatButton(
-      onPressed: () {
-
-
-
-        setState(() {
-
-          this._onClickLogin();
-
-        //            setState(() { });
-          });
-
-      },
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            'ENTRAR',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 14,
-              fontWeight: FontWeight.w700,
-            ),
-          ),
-          Icon(
-            Icons.arrow_forward,
-            color: Colors.black,
-          ),
-        ],
-      ),
-    );
-
-  }
-
-
 
 
   inputUserName(){
@@ -152,7 +164,7 @@ class _LoginPageState extends State<LoginPage> {
   TextFormField _textUserNameField(){
 
     return new TextFormField(
-//      maxLength: 10,
+
         inputFormatters: [LengthLimitingTextInputFormatter(10),],
         controller: _controllerUserName,
         validator: Useful.validateUsername,
@@ -165,6 +177,7 @@ class _LoginPageState extends State<LoginPage> {
         cursorColor: Colors.black,
         keyboardType: TextInputType.text,
         decoration: InputDecoration(
+          //errorText: ,
 
           filled: false,
           fillColor: Colors.white,
@@ -205,6 +218,7 @@ class _LoginPageState extends State<LoginPage> {
   TextFormField _textFieldPass(){
 
     return new TextFormField(
+      //enabled:  Provider.of<UserProvider>(context).isLoading(),
 
         validator: Useful.validateName,
         controller: _controllerPass,
@@ -239,74 +253,12 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-
-
-
-
-
-  Future<void> _onClickLogin()  {
-
-    if(this._formKey.currentState.validate()){
-       this._formKey.currentState.save();
-    }
-
-
-
-    try{
-
-      this._dataUserLogin.passwords = _controllerPass.text;
-      this._dataUserLogin.username = _controllerUserName.text;
-      setState(() {
-
-      });
-//        await this._controller.userLogin(this._dataUserLogin).then((data){
-
-
-          if(true)
-          {
-            openNavigatorHomePage();
-
-          }else{
-            Useful.toastMessage(message:"Nome de Utlizador ou Palavra passe não está Correta" );
-            _dataUserLogin.flagBussy = false;
-
-
-          }           setState(() {
-
-         });
-
-//          _dataUserLogin.flagBussy = false;
-//           });
-//          print("valor ----- : " + data.toString());
-
-          /*  if(UserViewModel.flagBussy1)
-             {
-               openNavigatorHomePage();
-
-             }else{
-               Useful.toastMessage(message:"Nome de Utlizador ou Palavra passe não está Correta" );
-
-             }*/
-
-      //    Useful.toastMessage(message: resp.toString() );
-
-
-
-
-
-
-
-  }catch (err){
-        Useful.toastMessage(message:"errrosss " + err);
-  }
-
-
-  }
-
   _containerVerify() {
 
     return new Center(child: Container(child: CircularProgressIndicator(backgroundColor: Colors.black,),),);
   }
+
+
 
 }
 

@@ -27,4 +27,17 @@ void main() {
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsOneWidget);
   });*/
+  /*var now = new DateTime.now();
+  var later = now.add(const Duration(seconds: 5));
+  assert(later.isAfter(now));
+  assert(!now.isBefore(now));
+
+// This relation stays the same, even when changing timezones.
+  assert(later.isAfter(now.toUtc()));
+  assert(later.toUtc().isAfter(now));
+
+  assert(!now.toUtc().isBefore(now));
+  assert(!now.isBefore(now.toUtc()));*/
+
+
 }

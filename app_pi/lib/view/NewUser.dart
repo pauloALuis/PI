@@ -1,17 +1,15 @@
 
-import 'package:app_pi/services/ClientModel.dart';
+import 'package:app_pi/Provider/UserProvider.dart';
+import 'package:app_pi/model/User.dart';
 import 'package:app_pi/util/Useful.dart';
+import 'package:app_pi/view/MealsPage.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:app_pi/view/widget/buttonNewUser.dart';
-import 'package:app_pi/view/widget/inputEmail.dart';
-import 'package:app_pi/view/widget/newEmail.dart';
-
-import 'package:app_pi/view/widget/newName.dart';
-import 'package:app_pi/view/widget/password.dart';
 import 'package:app_pi/view/widget/singup.dart';
 import 'package:app_pi/view/widget/textNew.dart';
 import 'package:app_pi/view/widget/userOld.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 
 class NewUser extends StatefulWidget {
@@ -21,71 +19,81 @@ class NewUser extends StatefulWidget {
 
 class _NewUserState extends State<NewUser> {
   final _formKey = GlobalKey<FormState>();
+  User user;
+  UserProvider auth;
 
   bool _controllerTypeClient = false;
   TextEditingController _controllerFullName = new TextEditingController();
-  TextEditingController _controllerUserName = new TextEditingController();
+  TextEditingController _controllerEmail = new TextEditingController();
   TextEditingController _controllerPass     = new TextEditingController();
   TextEditingController _controllerPhone    = new TextEditingController();
   TextEditingController _controllerNIF      = new TextEditingController();
+  TextEditingController _controllerNumCartao = new TextEditingController();
 
-  ClientModel clientModel = new ClientModel();
   @override
   Widget build(BuildContext context) {
+    this.auth = Provider.of<UserProvider>(context);
+
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topRight,
-              end: Alignment.bottomLeft,
-              colors: [Colors.blueGrey, Colors.lightGreenAccent]),
-        ),
-        child:Form(key: _formKey, child: ListView(
-          children: <Widget>[
-            Column(
-              children: <Widget>[
-                Row(
-                  children: <Widget>[
-                    SingUp(),
-                    TextNew(),
-                  ],
-                ),
-                inputName(),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [Colors.blueGrey, Colors.lightGreenAccent]),
+          ),
+          child:Form(key: _formKey, child: ListView(
+            children: <Widget>[
+              Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      SingUp(),
+                      TextNew(),
+                    ],
+                  ),
+                  this.inputName(),
+                  this.inputCustomer_type1(),
+
+                  Row(
+
+                    children: <Widget>[ Container(     height: 50,
+                        width: MediaQuery.of(context).size.width,child: Row(
+
+                      children: <Widget>[
+                        this.inputNumCartao1(),
+                        this.inputPhone(),
+
+                      ],
+                    )),
+
+                    ],
+                  ),
+                 // this.inputCustomer_type(),
+                  this.inputNif(),
+                  this.inputEmail(),
+
+                  this.passwordInput(),
+
 //                inputLastName(),
-                inputUsername(),
-                inputNif(),
-                inputPhone(),
-                inputCustomer_type(),
-                passwordInput(),
-                buttonNewUser(),
-                UserOld(),
-              ],
-            ),
-          ],
-        ))
+                  //inputUsername(),
+                  this.buttonNewUser(),
+                  UserOld(),
+                ],
+              ),
+            ],
+          ))
       ),
     );
   }
 
-//  "username":"pu3",
-//  "password":"123456",
-//  "email":"paulo@gmail.com",
-//  "first_name":"paulo",
-//  "last_name":"paulo1",
-//  "customer_type":"1",
-//  "person_id":"4",
-//  "nif":"125456963",
-//  "phone":"986754653",
-//  "funds":"50.8"
-//}
 
-
-inputName(){
+  inputName(){
 
     return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 50, right: 50),
+      padding: const EdgeInsets.only(top: 10, left: 50, right: 40),
       child: Container(
-        height: 60,
+        height: 50,
         width: MediaQuery.of(context).size.width,
         child: TextFormField(
             validator: Useful.validateName,
@@ -93,12 +101,11 @@ inputName(){
 
 
             //      maxLength: 10,
-            inputFormatters: [LengthLimitingTextInputFormatter(10),],
-            maxLines: 1,
+            //inputFormatters: [LengthLimitingTextInputFormatter(10),],
 
             autofocus: true,
             textAlign: TextAlign.left,
-            style: new TextStyle(color: Colors.black, fontSize: 20.0),
+            style: new TextStyle(color: Colors.black, fontSize: 18.0),
             cursorColor: Colors.black,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
@@ -124,25 +131,24 @@ inputName(){
     );
   }
 
-inputUsername(){
+  inputEmail(){
 
     return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 50, right: 50),
+      padding: const EdgeInsets.only(top: 10, left: 50, right: 40),
       child: Container(
-        height: 60,
+        height: 45,
         width: MediaQuery.of(context).size.width,
         child: TextFormField(
 
-            controller: _controllerUserName,
+            controller: _controllerEmail,
             validator: Useful.validateUsername,
 
             //      maxLength: 10,
-            inputFormatters: [LengthLimitingTextInputFormatter(10),],
             maxLines: 1,
 
             autofocus: true,
             textAlign: TextAlign.left,
-            style: new TextStyle(color: Colors.black, fontSize: 20.0),
+            style: new TextStyle(color: Colors.black, fontSize: 18.0),
             cursorColor: Colors.black,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
@@ -150,23 +156,23 @@ inputUsername(){
               filled: false,
               fillColor: Colors.white,
               hoverColor: Colors.black,
-//        helperText: 'User Name2',//texto por baixo do textField
-              prefixIcon: Icon(Icons.person, color: Colors.white,),
-//          suffixText: 'User nname',
-//          suffixStyle: new TextStyle(fontSize: 12),
-              hintText: '_utilizador',
+              //        helperText: 'User Name2',//texto por baixo do textField
+              prefixIcon: Icon(Icons.email, color: Colors.white,),
+              //          suffixText: 'User nname',
+              //          suffixStyle: new TextStyle(fontSize: 12),
+              hintText: 'Email',
               hintStyle: new TextStyle(color: Colors.black45),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide(color: Colors.yellowAccent),
 
               ),
-              labelText: 'Nome de Utilizador',
+              labelText: 'Email',
 
-//          labelStyle: TextStyle(
-//              color: Colors.amber
-//          ),
-//        focusColor: Colors.amber,
+              //          labelStyle: TextStyle(
+              //              color: Colors.amber
+              //          ),
+              //        focusColor: Colors.amber,
 
             )
         ),
@@ -174,18 +180,19 @@ inputUsername(){
     );
   }
 
-Padding passwordInput() {
+
+  Padding passwordInput() {
 
     return new Padding(
-        padding: const EdgeInsets.only(top: 10, left: 50, right: 50),
+        padding: const EdgeInsets.only(top: 10, left: 50, right: 40),
         child: Container(
-            height: 60,
+            height: 40,
             width: MediaQuery.of(context).size.width,
             child: _textFieldPass() )
     );
   }
 
-TextFormField _textFieldPass(){
+  TextFormField _textFieldPass(){
 
     return new TextFormField(
 
@@ -199,7 +206,7 @@ TextFormField _textFieldPass(){
         obscureText: true,
         autofocus: true,
         textAlign: TextAlign.left,
-        style: new TextStyle(color: Colors.black, fontSize: 20.0),
+        style: new TextStyle(color: Colors.black, fontSize: 18.0),
         cursorColor: Colors.black,
         keyboardType: TextInputType.visiblePassword,
         decoration: InputDecoration(
@@ -207,11 +214,11 @@ TextFormField _textFieldPass(){
           filled: false,
           fillColor: Colors.white,
           hoverColor: Colors.black,
-//        helperText: 'User Name2',//texto por baixo do textField
+          //        helperText: 'User Name2',//texto por baixo do textField
           prefixIcon: Icon(Icons.lock, color: Colors.white,),
-//        suffixText: 'User name',
+          //        suffixText: 'User name',
           suffixStyle: new TextStyle(fontSize: 12),
-//        hintText: 'user name',
+          //        hintText: 'user name',
           hintStyle: new TextStyle(color: Colors.black45),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
@@ -227,21 +234,21 @@ TextFormField _textFieldPass(){
   inputNif(){
 
     return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 50, right: 50),
+      padding: const EdgeInsets.only(top: 10, left: 50, right: 40),
       child: Container(
-        height: 60,
+        height: 40,
         width: MediaQuery.of(context).size.width,
         child: TextFormField(
             validator: Useful.validateNIF,
             controller: this._controllerNIF,
 
             //      maxLength: 10,
-            inputFormatters: [LengthLimitingTextInputFormatter(10),],
+            inputFormatters: [LengthLimitingTextInputFormatter(15),],
             maxLines: 1,
 
             autofocus: true,
             textAlign: TextAlign.left,
-            style: new TextStyle(color: Colors.black, fontSize: 20.0),
+            style: new TextStyle(color: Colors.black, fontSize: 16.0),
             cursorColor: Colors.black,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
@@ -250,11 +257,11 @@ TextFormField _textFieldPass(){
               fillColor: Colors.white,
               hoverColor: Colors.black,
 //        helperText: 'User Name2',//texto por baixo do textField
-              prefixIcon: Icon(Icons.person, color: Colors.white,),
+              prefixIcon: Icon(Icons.app_registration , color: Colors.white,),
 //          suffixText: 'User nname',
 //          suffixStyle: new TextStyle(fontSize: 12),
-              hintText: '239 259 259 258',
-              hintStyle: new TextStyle(color: Colors.black45),
+              hintText: '239 259 259',
+              hintStyle: new TextStyle(color: Colors.black45, fontSize: 16),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
                 borderSide: BorderSide(color: Colors.yellowAccent),
@@ -262,9 +269,8 @@ TextFormField _textFieldPass(){
               ),
               labelText: 'Número de Contribuinte',
 
-//          labelStyle: TextStyle(
-//              color: Colors.amber
-//          ),
+          labelStyle: TextStyle(
+            fontSize: 17          ),
 //        focusColor: Colors.amber,
 
             )
@@ -276,20 +282,20 @@ TextFormField _textFieldPass(){
   inputPhone(){
 
     return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 50, right: 50),
+      padding: const EdgeInsets.only(top: 10, left: 0, right: 40),
       child: Container(
-        height: 60,
-        width: MediaQuery.of(context).size.width,
+        height: 50,
+        width: 155,
         child: TextFormField(
             validator: Useful.validatePhone,
             controller: _controllerPhone,
             //      maxLength: 10,
-            inputFormatters: [LengthLimitingTextInputFormatter(10),],
+            inputFormatters: [LengthLimitingTextInputFormatter(9),],
             maxLines: 1,
 
             autofocus: true,
             textAlign: TextAlign.left,
-            style: new TextStyle(color: Colors.black, fontSize: 17.0),
+            style: new TextStyle(color: Colors.black, fontSize: 14.0),
             cursorColor: Colors.black,
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
@@ -321,12 +327,64 @@ TextFormField _textFieldPass(){
     );
   }
 
+
+  inputNumCartao1(){
+    print(this._controllerTypeClient );
+
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, left:50, right: 2),
+      child: Container(
+        height: 45,
+        width:160,
+        child: TextFormField(
+            validator: Useful.validateNumCard,
+            controller: _controllerNumCartao,
+            //      maxLength: 10,
+            inputFormatters: [LengthLimitingTextInputFormatter(9),], //964 789 789
+            maxLines: 1,
+
+            autofocus: true,
+            textAlign: TextAlign.left,
+            style: new TextStyle(color: Colors.black, fontSize: 14.0),
+            cursorColor: Colors.black,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+
+              filled: false,
+              fillColor: Colors.white,
+              hoverColor: Colors.black,
+//        helperText: 'User Name2',//texto por baixo do textField
+              prefixIcon: Icon(Icons.confirmation_number, color: Colors.white,),
+//          suffixText: 'User nname',
+//          suffixStyle: new TextStyle(fontSize: 12),
+              hintText: '18189',
+              hintStyle: new TextStyle(color: Colors.black45),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                borderSide: BorderSide(color: Colors.yellowAccent),
+
+              ),
+              labelText: _controllerTypeClient? "Nº Funcionário" : "Nº Aluno",
+
+          labelStyle: TextStyle(
+            fontSize: 13
+          ),
+//        focusColor: Colors.amber,
+
+            )
+        ),
+      ),
+    );
+  }
+
+
   inputPerson_id(){
 
     return Padding(
-      padding: const EdgeInsets.only(top: 10, left: 50, right: 50),
+      padding: const EdgeInsets.only(top: 10, left: 50, right: 40),
       child: Container(
-        height: 60,
+        height: 50,
         width: MediaQuery.of(context).size.width,
         child: TextFormField(
             validator: (value){
@@ -346,7 +404,7 @@ TextFormField _textFieldPass(){
 
             autofocus: true,
             textAlign: TextAlign.left,
-            style: new TextStyle(color: Colors.black, fontSize: 20.0),
+            style: new TextStyle(color: Colors.black, fontSize: 17.0),
             cursorColor: Colors.black,
             keyboardType: TextInputType.text,
             decoration: InputDecoration(
@@ -383,73 +441,140 @@ TextFormField _textFieldPass(){
     return Padding(
       padding: const EdgeInsets.only(top: 10, left: 50, right: 50),
       child: Container(
-        height: 60,
-        width: MediaQuery.of(context).size.width,
-        child: Row (children: [Text("Aluno"),
-        Switch(value: _controllerTypeClient, onChanged: (bool value){
-          setState(() {
-            _controllerTypeClient = value;
-          });
+          height: 50,
+          width: MediaQuery.of(context).size.width,
+          child: Row (children: [Text("Aluno"),
+          Switch(value: _controllerTypeClient, onChanged: (bool value){
+            setState(() {
+              _controllerTypeClient = value;
+            });
 
-        })  , Text("Funcionário")],)
+          })  , Text("Funcionário")],)
+      ),
+    );
+  }
+  inputCustomer_type1(){
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, left: 10, right: 40),
+      child: Container(
+          height: 40,
+          width: 200,
+          child: Row (children: [Text("Aluno", style: new TextStyle(color: Colors.black, fontSize: 14.0)),
+          Switch(value: _controllerTypeClient, onChanged: (bool value){
+            setState(() {
+              _controllerTypeClient = value;
+            });
+
+          })  , Text("Funcionário")],)
       ),
     );
   }
 
   buttonNewUser() {
- return Padding(
-    padding: const EdgeInsets.only(top: 40, right: 50, left: 200),
-    child: Container(
-      alignment: Alignment.bottomRight,
-      height: 50,
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.blue[300],
-              blurRadius: 10.0, // has the effect of softening the shadow
-              spreadRadius: 1.0, // has the effect of extending the shadow
-              offset: Offset(
-                5.0, // horizontal, move right 10
-                5.0, // vertical, move down 10
+    return Padding(
+      padding: const EdgeInsets.only(top: 40, right: 50, left: 200),
+      child: Container(
+        alignment: Alignment.bottomRight,
+        height: 50,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.blue[300],
+                blurRadius: 10.0, // has the effect of softening the shadow
+                spreadRadius: 1.0, // has the effect of extending the shadow
+                offset: Offset(
+                  5.0, // horizontal, move right 10
+                  5.0, // vertical, move down 10
+                ),
               ),
-            ),
-          ],
-          color: Colors.white, borderRadius: BorderRadius.circular(30)),
-      child: FlatButton(
-        onPressed: (){
-          _onClicke(context);
+            ],
+            color: Colors.white, borderRadius: BorderRadius.circular(30)),
+        child: FlatButton(
+          onPressed: (){
+            _onClicke(context);
 
 //          Navigator.pop(context);
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'CRIAR CONTA',
-              style: TextStyle(
-                color: Colors.lightBlueAccent,
-                fontSize: 14,
-                fontWeight: FontWeight.w700,
+          },
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                'CRIAR CONTA',
+                style: TextStyle(
+                  color: Colors.lightBlueAccent,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w700,
+                ),
               ),
-            ),
-            Icon(
-              Icons.arrow_forward,
-              color: Colors.lightBlueAccent,
-            ),
-          ],
+              Icon(
+                Icons.arrow_forward,
+                color: Colors.lightBlueAccent,
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   void _onClicke([BuildContext context]) {
 
-    if(_formKey.currentState.validate()){
-      _formKey.currentState.save();
+    if(this._formKey.currentState.validate()){
+      this._formKey.currentState.save();
+      this.user = this.newUser();
+
+      print("Ok criar.... ");
+      print(newUser().toString());
+
+      auth.registerUser(this.newUser()).then((value) {
+        if(value){
+          Navigator.push(context, MaterialPageRoute(builder: (context)=> new MealsPage()));
+        }
+        else{
+          Flushbar(
+            title: "Falha acesso",
+            message: auth.getMessage().toString(),
+            duration: Duration(seconds: 8),
+            borderColor: Colors.green,
+            backgroundColor: Useful.erroColors,
+          ).show(context);
+        }
+
+      });
+
+
     }
 
+  }
+
+  String getTypeCustomer() {
+    print(this._controllerTypeClient );
+
+    return " ${ this._controllerTypeClient ? 2 : 3 }";
+  }
+
+  User newUser() {
+    var nameSplit = this._controllerFullName.text.trim().toString().split(' '); //'Hello world!' -> ['Hello', 'world!'];
+    var lastname= new List();
+
+    if(nameSplit.length > 1){
+      for(int i = 1; i < nameSplit.length; i++ )
+      {
+         if(nameSplit[i].trim() != ""){
+           lastname.add( nameSplit[i].toString());// "${nameSplit[i]}";
+         }
+      }
+      lastname[0]= lastname.join(" ");
+    }
+    return new User(firstName: ((nameSplit.length <= 1)? nameSplit:  nameSplit[0].toString()), lastName: (nameSplit.length > 1)? lastname[0]: " ",
+      password: this._controllerPass.text, username:this._controllerEmail.text/**"pppluiss" **/,
+      email: this._controllerEmail.text, customerType:this.getTypeCustomer(),
+      phone: /**986754626***/int.parse(this._controllerPhone.text), personId: int.parse(this._controllerNumCartao.text) ,
+      nif: int.parse(this._controllerNIF.text)/** 123456726**/, funds: "150.80",
+
+    );
   }
 
 }

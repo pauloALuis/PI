@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:app_pi/view/HomePage.dart';
-import 'package:app_pi/controller/UserController.dart';
-import 'package:app_pi/services/ClientModel.dart';
+import 'package:app_pi/view/MealsPage.dart';
 
 class ButtonLogin extends StatefulWidget {
-  GlobalKey<FormState> form;
-  ButtonLogin({this.form});
+  ButtonLogin();
 
   @override
   _ButtonLoginState createState() => _ButtonLoginState();
 }
 
 class _ButtonLoginState extends State<ButtonLogin> {
-  GlobalKey<FormState> _formKey;
-  final _controller = new UserController();
-  final _model = new ClientModel();
-
   @override
   Widget build(BuildContext context) {
-    val();
     return Padding(
       padding: const EdgeInsets.only(top: 40, right: 50, left: 200),
       child: Container(
@@ -47,31 +39,11 @@ class _ButtonLoginState extends State<ButtonLogin> {
   }
 
 
-  void val(){
-    _formKey = this.widget.form;
-//    Toast.show("Toast plugin app"+ valor, context, duration: Toast.LENGTH_LONG, gravity:  Toast.BOTTOM);
-
-  }
-  void openNavigatorHomePage(){
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context) => HomePage()));
-  }
 
 
-  FlatButton flatButtonLogin (){
+  FlatButton flatButtonLogin ({Function function}){
       return new  FlatButton(
-        onPressed: () {
-
-        if(_formKey.currentState.validate()){
-          _formKey.currentState.save();
-        }
-
-        setState(() {
-              print("testeeeee");
-
-
-        } );
-          },
+        onPressed: function,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
